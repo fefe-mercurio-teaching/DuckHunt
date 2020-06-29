@@ -8,9 +8,14 @@ public class Piattello : MonoBehaviour
 
     public float speed;
 
+    void Start()
+    {
+        GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
+        gameController = gameControllerObject.GetComponent<GameController>();
+    }
+
     private void OnMouseDown()
     {
-        //GameController controllerComponent = gameController.GetComponent<GameController>();
         gameController.AddScore(1);
 
         Destroy(gameObject);
@@ -20,9 +25,10 @@ public class Piattello : MonoBehaviour
     {
         transform.Translate(speed * gameController.Level * 0.3f, 0f, 0f);
 
-        if (transform.position.x > 50f)
+        if (transform.position.x > 27f || transform.position.x < -27f)
         {
             Destroy(gameObject);
+            gameController.LoseOneLife();
         }
     }
 }
